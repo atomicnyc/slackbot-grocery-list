@@ -84,6 +84,13 @@ if (process.env.MONGO_URI) {
 
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot(bot_options);
+controller.hears(
+    ['hello', 'hi', 'greetings'],
+    ['direct_mention', 'mention', 'direct_message'],
+    function(bot,message) {
+        bot.reply(message,'Hello!');
+    }
+);
 
 controller.startTicking();
 
