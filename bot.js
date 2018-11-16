@@ -73,8 +73,7 @@ var bot_options = {
         'bot',
         'channels:history',
         'channels:read',
-        'chat.postMessage',
-        'chat.write:bot',
+        'chat:write:bot',
     ],
     studio_token: process.env.studio_token,
     studio_command_uri: process.env.studio_command_uri
