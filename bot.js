@@ -68,7 +68,7 @@ var bot_options = {
     clientId: process.env.clientId,
     clientSecret: process.env.clientSecret,
     clientSigningSecret: process.env.clientSigningSecret,
-    // debug: true,
+    debug: true,
     scopes: [
         'bot',
         'channels:history',
@@ -90,13 +90,6 @@ if (process.env.MONGO_URI) {
 
 // Create the Botkit controller, which controls all instances of the bot.
 var controller = Botkit.slackbot(bot_options);
-controller.hears(
-    ['hello', 'hi', 'greetings'],
-    ['direct_mention', 'mention', 'direct_message'],
-    function(bot,message) {
-        bot.reply(message,'Hello!');
-    }
-);
 
 controller.startTicking();
 
@@ -120,7 +113,7 @@ if (!process.env.clientId || !process.env.clientSecret) {
 
   var where_its_at = 'https://' + process.env.PROJECT_DOMAIN + '.glitch.me/';
   console.log('WARNING: This application is not fully configured to work with Slack. Please see instructions at ' + where_its_at);
-}else {
+} else {
 
   webserver.get('/', function(req, res){
     res.render('index', {
@@ -147,6 +140,13 @@ if (!process.env.clientId || !process.env.clientSecret) {
   require("fs").readdirSync(normalizedPath).forEach(function(file) {
     require("./skills/" + file)(controller);
   });
+  controller.hears(
+    ['hello', 'hi', 'greetings'],
+    ['direct_mention', 'mention', 'direct_message'],
+    function(bot,message) {
+        bot.reply(message,'Hello!');
+    }
+);
 
   // This captures and evaluates any message sent to the bot as a DM
   // or sent to the bot in the form "@bot message" and passes it to
